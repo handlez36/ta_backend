@@ -17,7 +17,7 @@ class V1::CategoriesController < ApplicationController
     if new_category.errors.count == 0
       render json: new_category, status: :ok
     else
-      render json: new_category.errors.messages, status: :unprocessable_entity
+      render json: {'error': true}.merge(new_category.errors.messages), status: :unprocessable_entity
     end
   end
 
