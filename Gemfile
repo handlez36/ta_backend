@@ -26,6 +26,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Misc
 gem 'annotate'
 gem 'pry'
+gem 'rack-cors', :require => 'rack/cors'
 
 # Testing
 gem 'rspec-rails'

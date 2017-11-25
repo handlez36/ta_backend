@@ -1,20 +1,4 @@
 Rails.application.routes.draw do
-  namespace :v1 do
-  get 'categories/index'
-  end
-
-  namespace :v1 do
-  get 'categories/show'
-  end
-
-  namespace :v1 do
-  get 'categories/create'
-  end
-
-  namespace :v1 do
-  get 'categories/update'
-  end
-
   namespace 'v1', path: '/' do
     with_options except: ['new', 'edit'] do |path|
       path.resources :journies

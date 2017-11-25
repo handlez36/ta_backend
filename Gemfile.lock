@@ -89,6 +89,7 @@ GEM
     pry-rails (0.3.6)
       pry (>= 0.10.4)
     rack (1.6.8)
+    rack-cors (1.0.2)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.8)
@@ -190,6 +191,7 @@ DEPENDENCIES
   pg (~> 0.15)
   pry
   pry-rails
+  rack-cors
   rails (= 4.2.8)
   rspec-collection_matchers
   rspec-mocks
