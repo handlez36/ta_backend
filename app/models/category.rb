@@ -9,5 +9,7 @@
 #
 
 class Category < ActiveRecord::Base  
+  has_many :journys, class_name: 'Journey', dependent: :destroy
+  
   validates :name, presence: true, uniqueness: true
 end
