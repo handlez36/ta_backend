@@ -12,7 +12,9 @@
 
 class Journey < ActiveRecord::Base
   belongs_to :category
+  has_many :posts
   
   validates :title, presence: true
   validates :category, presence: true
+  validates :user_id, presence: true
 end

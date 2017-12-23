@@ -1,6 +1,13 @@
 class V1::CategoriesController < ApplicationController
+  skip_before_action :verify_authenticity_token
+  
   def index
     categories = Category.all
+    
+    puts "Category Controller - params: #{params}"
+    if params["id"]
+      categories = categories.where(id: params["id"])
+    end
     
     render json: categories, status: :ok
   end
@@ -26,9 +33,9 @@ class V1::CategoriesController < ApplicationController
     
     unless category.nil?
       if category.update(category_params)
-        render json: {status: true}, status: :ok and return
+        render json: category, status: :ok and return
       else
-        render json: {status: false}, status: 500 and return
+        render json: category.errors, status: 500 and return
       end
     end
     

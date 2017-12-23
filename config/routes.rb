@@ -3,6 +3,8 @@ Rails.application.routes.draw do
     with_options except: ['new', 'edit'] do |path|
       path.resources :journies
       path.resources :categories
+      path.resources :users
+      path.resources :posts
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

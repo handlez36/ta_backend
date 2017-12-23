@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171124203319) do
+ActiveRecord::Schema.define(version: 20171214003001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,9 +28,30 @@ ActiveRecord::Schema.define(version: 20171124203319) do
     t.integer  "category_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "user_id"
   end
 
   add_index "journeys", ["category_id"], name: "index_journeys_on_category_id", using: :btree
+
+  create_table "posts", force: :cascade do |t|
+    t.string   "title"
+    t.text     "content"
+    t.string   "video_url"
+    t.string   "image_urls", default: [],              array: true
+    t.integer  "journy_id",               null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "name"
+    t.string   "nickname"
+    t.string   "picture"
+    t.string   "email"
+    t.string   "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   add_foreign_key "journeys", "categories"
 end
