@@ -1,15 +1,10 @@
 class V1::PostsController < ApplicationController
   skip_before_action :verify_authenticity_token
   
-  def index
-    posts = Post.all
-    
-    puts "Post Controller - params: #{params}"
-    if params["journy_id"]
-      posts = Post.where(journy_id: params["journy_id"])
-    elsif params["user_id"]
-      posts = Post.where(user_id: params["user_id"])
-    end
+  def index    
+    posts = (filter_params.empty?) ?
+      Post.all :
+      Post.where(filter_params)
     
     render json: posts, status: :ok
   end
@@ -71,5 +66,9 @@ class V1::PostsController < ApplicationController
           permitted.delete(:journey_id)
         end
       end
+  end
+  
+  def filter_params
+    params.permit("user_id", "journy_id", "user_id": [], "journy_id": [])
   end
 end

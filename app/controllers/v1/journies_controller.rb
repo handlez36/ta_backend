@@ -2,16 +2,9 @@ class V1::JourniesController < ApplicationController
   skip_before_action :verify_authenticity_token
   
   def index
-    journies = Journey.all
-    
-    puts "Journey Controller - params: #{params}"
-    if params["id"]
-      journies = journies.where(id: params["id"])
-    elsif params["user_id"]
-      journies = journies.where(user_id: params["user_id"])
-    elsif params["category_id"]
-      journies = journies.where(category_id: params["category_id"])
-    end
+    journies = (filter_params.empty?) ?
+      Journey.all :
+      Journey.where(filter_params)
     
     render json: journies, status: :ok
   end
@@ -67,6 +60,10 @@ class V1::JourniesController < ApplicationController
   
   def journey_params
     params.required(:journy).permit(:title, :description, :category_id, :user_id)
+  end
+  
+  def filter_params
+    params.permit("id", "user_id", "category_id", "id": [], "user_id": [], "category_id": [])
   end
   
 end
