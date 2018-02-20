@@ -8,7 +8,7 @@ class V1::UsersController < ApplicationController
   end
 
   def show
-    user = User.find_by(user_id: params[:id]) || nil
+    user = User.find_by(id: params[:id]) || nil
     
     render json: user, status: :ok
   end
