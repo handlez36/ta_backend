@@ -2,9 +2,19 @@ class V1::CategoriesController < ApplicationController
   skip_before_action :verify_authenticity_token
   
   def index    
-    categories = (filter_params.empty?) ?
-      Category.all :
-      Category.where(filter_params)
+    # categories = (filter_params.empty?) ?
+    #   Category.all :
+    #   Category.where(filter_params)
+
+    categories = if filter_params.empty?
+        Category.all
+      else
+        filter_params["wildcard"].present? ?
+          search = "name ILIKE '%#{filter_params["name"]}%'" :
+          search = filter_params
+  
+        Category.where(search)
+      end
     
     render json: categories, status: :ok
   end
@@ -62,6 +72,11 @@ class V1::CategoriesController < ApplicationController
   end
   
   def filter_params
-    params.permit("id", "id": [])
+    params.permit(
+      "id",
+      "name",
+      "wildcard",
+      "id": []
+    )
   end
 end

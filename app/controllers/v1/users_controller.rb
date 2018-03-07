@@ -1,8 +1,18 @@
 class V1::UsersController < ApplicationController
   def index  
-    users = (filter_params.empty?) ?
-      User.all :
-      User.where(filter_params)
+    # users = (filter_params.empty?) ?
+    #   User.all :
+    #   User.where(filter_params)
+
+    users = if filter_params.empty?
+      User.all
+    else
+      filter_params["wildcard"].present? ?
+        search = "nickname ILIKE '%#{filter_params["nickname"]}%'" :
+        search = filter_params
+
+      User.where(search)
+    end
     
     render json: users, status: :ok
   end
@@ -61,7 +71,14 @@ class V1::UsersController < ApplicationController
   end
   
   def filter_params
-    params.permit("user_id", "journy_id", "user_id": [], "journy_id": [])
+    params.permit(
+      "user_id", 
+      "journy_id",
+      "nickname",
+      "wildcard",
+      "user_id": [], 
+      "journy_id": []
+    )
   end
   
 end
